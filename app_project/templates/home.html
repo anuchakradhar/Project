@@ -5,8 +5,6 @@
 {% endblock %}
 
 {% block content %}
-<h1>Hello</h1>
-
   {% for post in object_list %}
     <article class="media content-section">
       <img class="rounded-circle article-img" src="{{ post.creator.profile.profile_picture.url}}" alt="">
