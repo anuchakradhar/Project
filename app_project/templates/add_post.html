@@ -1,0 +1,33 @@
+
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}
+  Add Post
+{% endblock %}
+
+{% block content %}
+  {% if user.is_authenticated %}
+    <div class="content-section">
+          <form method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+              <fieldset class="form-group">
+                  <legend class="border-bottom mb-4">Add Post</legend>
+                  <!-- {{ form.media }} -->
+                  {{ form|crispy }}
+              </fieldset>
+              <div class="form-group">
+                  <button class="btn btn-secondary" type="submit">Post</button>
+              </div>
+          </form>
+      </div>
+
+      <!-- to restrict who can make post -->
+      <script>
+        var name = "{{ user.id }}";
+        document.getElementById("author").value = name;
+      </script>
+  {% else %}
+    <p> You are not logged in....</p>
+    Click <a href="{% url 'login' %}">Login</a>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,29 @@
+
+{% extends 'base.html' %}
+{% block title %}
+  Delete Post
+{% endblock %}
+
+{% block content %}
+  {% if user.is_authenticated %}
+    {% if user.id == postproblem.creator.id %}
+      <div class="content-section">
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Delete Post</legend>
+                    <strong>Are you sure??</strong>
+                </fieldset>
+                <div class="form-group">
+                    <button class="btn btn-secondary" type="submit">Delete</button>
+                </div>
+            </form>
+      </div>
+    {% else %}
+      <h1>You're not allowed</h1>
+    {% endif %}
+  {% else %}
+    <p> You are not logged in....</p>
+    Click <a href="{% url 'login' %}">Login</a>
+  {% endif %}
+{% endblock %}

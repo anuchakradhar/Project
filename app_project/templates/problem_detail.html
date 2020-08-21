@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  {{ postproblem.creator }}
+{% endblock %}
+
+{% block content %}
+<div class="content-section">
+  <h1>{{ postproblem.creator.first_name }} {{ postproblem.creator.last_name }}</h1>
+  <em>{{ postproblem.created_date }}</em>
+  <small>{{ postproblem.location }}</small>
+  {% if user.is_authenticated %}
+    {% if user.id == postproblem.creator.id %}
+      <a href="{% url 'update_post' postproblem.pk %}"><i class="fas fa-edit"></i></a>
+      <a href="{% url 'delete_post' postproblem.pk %}"><i class="fas fa-trash-alt"></i></a>
+    {% endif %}
+  {% endif %}
+  <hr>
+  <em><small>Status: {{ postproblem.status|title }}</small></em>
+  <p>{{ postproblem.problem_title|safe }}</p>
+
+  {% if postproblem.image %}
+    <img src="{{ postproblem.image.url }}">
+  {% endif %}
+
+  <div class="like">
+    <em>{{ total_likes }} Likes</em>
+  </div>
+  <hr>
+  {% if user.is_authenticated %}
+  <form action="{% url 'like_post' postproblem.pk %}" method="POST">
+    {% csrf_token %}
+    {% if liked %}
+      <button type="submit" name = "post_id" value= "{{ postproblem.id }}" class="btn btn-danger btn-sm">Unlike</button>
+    {% else %}
+      <button type="submit" name = "post_id" value= "{{ postproblem.id }}" class="btn btn-primary btn-sm">Like</button>
+    {% endif %}
+  </form>
+  {% else %}
+
+  <small><a href="{% url 'login' %}">Login</a> to like post</small>
+
+  {% endif %}
+  <br><hr>
+
+  <a class="btn btn-secondary" href="{% url 'home' %}">Back</a>
+
+
+
+
+</div>
+{% endblock %}
