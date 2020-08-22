@@ -27,3 +27,15 @@ class PostProblem(models.Model):
 	def get_absolute_url(self):
 		return reverse('home')
 	# 	return reverse('article-detail', args=(str(self.pk)))
+
+class Comment(models.Model):
+	post = models.ForeignKey(PostProblem, related_name='comments', on_delete = models.CASCADE)
+	user = models.ForeignKey(User, on_delete = models.CASCADE)
+	content = models.TextField()
+	date_commented = models.DateField(auto_now_add = True)
+
+	def __str__(self):
+		return '%s - %s' % (self.post.problem_title, self.user)
+
+	def get_absolute_url(self):
+		return reverse('problem-detail', args=(str(self.post.pk)))

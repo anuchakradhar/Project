@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import CreateView, UpdateView, DetailView
 from .forms import SignUpForm, UserUpdateForm, EditProfileForm
 from django.urls import reverse_lazy
@@ -9,6 +9,8 @@ from django.contrib import messages
 
 
 # Create your views here.
+
+
 class UserRegisterView(SuccessMessageMixin, CreateView):
 	form_class = SignUpForm
 	template_name = 'registration/register.html'

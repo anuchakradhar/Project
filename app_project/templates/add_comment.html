@@ -1,0 +1,26 @@
+
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}
+  Comment
+{% endblock %}
+
+{% block content %}
+    <div class="content-section">
+          <form method="POST">
+              {% csrf_token %}
+              <fieldset class="form-group">
+                  <legend class="border-bottom mb-4">Add Comment</legend>
+                  {{ form|crispy }}
+              </fieldset>
+              <div class="form-group">
+                  <button class="btn btn-secondary" type="submit">Comment</button>
+              </div>
+          </form>
+      </div>
+
+      <script>
+        var name = "{{ user.id }}";
+        document.getElementById("author").value = name;
+      </script>
+{% endblock %}
