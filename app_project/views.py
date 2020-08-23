@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import PostProblem
-from .forms import PostProblemForm
+from .models import PostProblem, Comment
+from .forms import PostProblemForm, CommentForm
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
@@ -31,8 +31,10 @@ class UserPostListView(ListView):
         return PostProblem.objects.filter(creator=user).order_by('-created_date')
 
 def StatusView(request, cats):
-	category_posts = PostProblem.objects.filter(status = cats)
-	return render(request, 'catagories.html', {'cats':cats, 'category_posts':category_posts})
+    category_posts = PostProblem.objects.filter(status = cats)
+    cat_menu = ('critical', 'mild', 'solved')
+    return render(request, 'catagories.html', {'cats':cats, 'category_posts':category_posts, 'cat_menu': cat_menu})
+
 
 def LikeView(request, pk):
     post = get_object_or_404(PostProblem, id= request.POST.get('post_id'))
@@ -72,6 +74,16 @@ class AddProblemView(CreateView):
     form_class = PostProblemForm
     template_name = 'add_post.html'
     # fields = '__all__'
+
+class AddCommentView(CreateView):
+    model = Comment
+    form_class = CommentForm
+    template_name = 'add_comment.html'
+    # fields = '__all__'
+
+    def form_valid(self, form):
+        form.instance.post_id = self.kwargs['pk']
+        return super().form_valid(form)
 
 class UpdateProblemView(UpdateView):
     model = PostProblem

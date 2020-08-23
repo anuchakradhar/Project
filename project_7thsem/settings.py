@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'project_7thsem.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'waste_reporting',
+        'NAME': 'waste_report',
         'USER': 'postgres',
         'PASSWORD': '1234',
         'HOST': 'localhost'
@@ -136,4 +136,4 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL = 'login'
-LOGOUT_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'login'
