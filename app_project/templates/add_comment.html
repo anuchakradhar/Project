@@ -6,21 +6,26 @@
 {% endblock %}
 
 {% block content %}
-    <div class="content-section">
-          <form method="POST">
-              {% csrf_token %}
-              <fieldset class="form-group">
-                  <legend class="border-bottom mb-4">Add Comment</legend>
-                  {{ form|crispy }}
-              </fieldset>
-              <div class="form-group">
-                  <button class="btn btn-secondary" type="submit">Comment</button>
-              </div>
-          </form>
+  {% if user.is_authenticated %}
+      <div class="content-section">
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Add Comment</legend>
+                    {{ form|crispy }}
+                </fieldset>
+                <div class="form-group">
+                    <button class="btn btn-secondary" type="submit">Comment</button>
+                </div>
+            </form>
       </div>
 
       <script>
-        var name = "{{ user.id }}";
-        document.getElementById("author").value = name;
+          var name = "{{ user.id }}";
+          document.getElementById("author").value = name;
       </script>
+  {% else %}
+      <p> You are not logged in....</p>
+      Click <a href="{% url 'login' %}">Login</a>
+  {% endif %}
 {% endblock %}

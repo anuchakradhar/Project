@@ -31,8 +31,10 @@ class UserPostListView(ListView):
         return PostProblem.objects.filter(creator=user).order_by('-created_date')
 
 def StatusView(request, cats):
-	category_posts = PostProblem.objects.filter(status = cats)
-	return render(request, 'catagories.html', {'cats':cats, 'category_posts':category_posts})
+    category_posts = PostProblem.objects.filter(status = cats)
+    cat_menu = ('critical', 'mild', 'solved')
+    return render(request, 'catagories.html', {'cats':cats, 'category_posts':category_posts, 'cat_menu': cat_menu})
+
 
 def LikeView(request, pk):
     post = get_object_or_404(PostProblem, id= request.POST.get('post_id'))

@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import CreateView, UpdateView, DetailView
 from .forms import SignUpForm, UserUpdateForm, EditProfileForm
 from django.urls import reverse_lazy
-from django.contrib.auth.forms import UserChangeForm
+from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
+from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
@@ -10,6 +11,11 @@ from django.contrib import messages
 
 # Create your views here.
 
+class PasswordsChangeView(PasswordChangeView):
+	form_class = PasswordChangeForm
+	template_name = 'registration/change_password.html'
+	success_url = reverse_lazy('profile')
+	success_message = "Your password has changed successfully"
 
 class UserRegisterView(SuccessMessageMixin, CreateView):
 	form_class = SignUpForm
